@@ -32,6 +32,7 @@
 }
 
 .list a:hover,
+.list a:focus::before,
 .list a:hover::before,
 .list a.active,
 .list a.active::before {
