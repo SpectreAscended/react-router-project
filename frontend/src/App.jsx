@@ -8,6 +8,7 @@ import RootLayout from './pages/Root';
 import EventsNavigation from './components/EventsNavigation';
 import EventsRootLayout from './pages/EventsRoot';
 // Challenge / Exercise
+import ErrorPage from './pages/Error';
 
 // 1. Add five new (dummy) page components (content can be simple <h1> elements)
 //    - HomePage
@@ -36,10 +37,13 @@ import EventsRootLayout from './pages/EventsRoot';
 
 // ^ it is best to keep the function within the component that is using it.  So here we move that async function into the Events page and simply export it there and import it here and pass that imported function into our loader prop.
 
+// Infact we do not even need to extract the data like const data = res.json(), we can just return the response object and Loader will take care of that for us.  Loader can return anything we want.
+
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       { index: true, element: <HomePage /> },
       {
