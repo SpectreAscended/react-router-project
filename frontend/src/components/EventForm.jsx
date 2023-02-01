@@ -8,6 +8,9 @@ function EventForm({ method, event }) {
     navigate('..');
   }
 
+  // If we want our Form to send the action to a different route, we can pass in the action prop and point it at the route of the component in which we want to trigger the action. But if you want to trigger the action in the currently active route, you do not need the action prop.
+  //action="/any-other-path"
+
   return (
     <Form method="post" className={classes.form}>
       <p>
