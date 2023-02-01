@@ -1,13 +1,12 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import HomePage from './pages/Home';
-import EventsPage from './pages/Events';
+import EventsPage, { loader as eventsLoader } from './pages/Events';
 import EventDetailPage from './pages/EventDetail';
 import EditEventPage from './pages/EditEvent';
 import NewEventPage from './pages/NewEvent';
 import RootLayout from './pages/Root';
 import EventsNavigation from './components/EventsNavigation';
 import EventsRootLayout from './pages/EventsRoot';
-
 // Challenge / Exercise
 
 // 1. Add five new (dummy) page components (content can be simple <h1> elements)
@@ -33,7 +32,9 @@ import EventsRootLayout from './pages/EventsRoot';
 //////////////////////////////////////////////////////
 // Loader
 
-// If we want to load an http request before a page is rendered, we can set a property on that element of loader. loader recieves a function, and this can be an async function, and whatever you return from that function will be available within that element. In that element we retrieve this data by using useLoader.  If our function returns a promise, react router will automatically detect that, and you will always get the final data you will yield from that promise as if you used await or .then. We can use this loaded data in any component that is nested within this component. So here we have the function on the EventsPage but we can access useLoader inside its nested EventList component.
+// If we want to load an http request only as we go to the page we are using it, we can set a property on that element of loader. The benifet of this is that the page won't load until the data is actually there. loader recieves a function, and this can be an async function, and whatever you return from that function will be available within that element. In that element we retrieve this data by using useLoader.  If our function returns a promise, react router will automatically detect that, and you will always get the final data you will yield from that promise as if you used await or .then. We can use this loaded data in any component that is nested within this component. So here we have the function on the EventsPage but we can access useLoader inside its nested EventList component.
+
+// ^ it is best to keep the function within the component that is using it.  So here we move that async function into the Events page and simply export it there and import it here and pass that imported function into our loader prop.
 
 const router = createBrowserRouter([
   {
@@ -48,16 +49,7 @@ const router = createBrowserRouter([
           {
             index: true,
             element: <EventsPage />,
-            loader: async () => {
-              const response = await fetch('http://localhost:8080/events');
-
-              if (!response.ok) {
-                // ...
-              } else {
-                const resData = await response.json();
-                return resData.events;
-              }
-            },
+            loader: eventsLoader,
           },
           { path: ':eventId', element: <EventDetailPage /> },
           { path: 'new', element: <NewEventPage /> },
