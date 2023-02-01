@@ -1,0 +1,40 @@
+.header {
+  max-width: 60rem;
+  margin: auto;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.list {
+  display: flex;
+  gap: 1rem;
+}
+
+.list a {
+  text-decoration: none;
+  color: var(--color-primary-400);
+  position: relative;
+  padding-bottom: 0.25rem;
+}
+
+.list a::before {
+  content: '';
+  background-color: currentColor;
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: background 250ms, transform 250ms ease;
+}
+
+.list a:hover,
+.list a:hover::before,
+.list a.active,
+.list a.active::before {
+  color: var(--color-primary-800);
+  transform: scaleX(100%);
+}
