@@ -30,6 +30,11 @@ import EventsRootLayout from './pages/EventsRoot';
 // 7. Output the ID of the selected event on the EventDetailPage
 // BONUS: Add another (nested) layout route that adds the <EventNavigation> component above all /events... page components
 
+//////////////////////////////////////////////////////
+// Loader
+
+// If we want to load an http request before a page is rendered, we can set a property on that element of loader. loader recieves a function, and this can be an async function, and whatever you return from that function will be available within that element. In that element we retrieve this data by using useLoader.  If our function returns a promise, react router will automatically detect that, and you will always get the final data you will yield from that promise as if you used await or .then. We can use this loaded data in any component that is nested within this component. So here we have the function on the EventsPage but we can access useLoader inside its nested EventList component.
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -40,7 +45,20 @@ const router = createBrowserRouter([
         path: 'events',
         element: <EventsRootLayout />,
         children: [
-          { index: true, element: <EventsPage /> },
+          {
+            index: true,
+            element: <EventsPage />,
+            loader: async () => {
+              const response = await fetch('http://localhost:8080/events');
+
+              if (!response.ok) {
+                // ...
+              } else {
+                const resData = await response.json();
+                return resData.events;
+              }
+            },
+          },
           { path: ':eventId', element: <EventDetailPage /> },
           { path: 'new', element: <NewEventPage /> },
           { path: ':eventId/edit', element: <EditEventPage /> },
