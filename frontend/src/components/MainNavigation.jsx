@@ -27,9 +27,9 @@ function MainNavigation() {
               Events
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink
-              to="/newevent"
+              to="/events/new"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
@@ -39,14 +39,14 @@ function MainNavigation() {
           </li>
           <li>
             <NavLink
-              to="/editEvent"
+              to="/edit"
               className={({ isActive }) =>
                 isActive ? classes.active : undefined
               }
             >
               Edit Event
             </NavLink>
-          </li>
+          </li> */}
         </ul>
       </nav>
     </header>

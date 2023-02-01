@@ -1,10 +1,12 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './pages/Root';
 import HomePage from './pages/Home';
 import EventsPage from './pages/Events';
 import EventDetailPage from './pages/EventDetail';
 import EditEventPage from './pages/EditEvent';
 import NewEventPage from './pages/NewEvent';
+import RootLayout from './pages/Root';
+import EventsNavigation from './components/EventsNavigation';
+import EventsRootLayout from './pages/EventsRoot';
 
 // Challenge / Exercise
 
@@ -31,13 +33,19 @@ import NewEventPage from './pages/NewEvent';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Root />,
+    element: <RootLayout />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'events', element: <EventsPage /> },
-      { path: 'events/:eventId', element: <EventDetailPage /> },
-      { path: 'newevent', element: <NewEventPage /> },
-      { path: 'editevent', element: <EditEventPage /> },
+      {
+        path: 'events',
+        element: <EventsRootLayout />,
+        children: [
+          { index: true, element: <EventsPage /> },
+          { path: ':eventId', element: <EventDetailPage /> },
+          { path: 'new', element: <NewEventPage /> },
+          { path: ':eventId/edit', element: <EditEventPage /> },
+        ],
+      },
     ],
   },
 ]);
