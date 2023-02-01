@@ -6,7 +6,9 @@ const RootLayout = () => {
   return (
     <div>
       <MainNavigation />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </div>
   );
 };
