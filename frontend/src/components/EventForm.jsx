@@ -1,8 +1,14 @@
-import { useNavigate, Form, useNavigation } from 'react-router-dom';
+import {
+  useNavigate,
+  Form,
+  useNavigation,
+  useActionData,
+} from 'react-router-dom';
 
 import classes from './EventForm.module.css';
 
 function EventForm({ method, event }) {
+  const data = useActionData();
   const navigate = useNavigate();
   const navigation = useNavigation();
 
@@ -15,8 +21,17 @@ function EventForm({ method, event }) {
   // If we want our Form to send the action to a different route, we can pass in the action prop and point it at the route of the component in which we want to trigger the action. But if you want to trigger the action in the currently active route, you do not need the action prop.
   //action="/any-other-path"
 
+  // useActionData - useActionData takes the response which we recieve from where we submit our form.  We have server side validation, which if it returns an error will send the status 422.  With that we can return our data.  Here, where our form is that is sending the request, we can call useActionData.  We check if that data object exists, and if so, we check if data.errors exists.  We then output a list of each error.
+
   return (
     <Form method="post" className={classes.form}>
+      {data && data.errors && (
+        <ul>
+          {Object.values(data.errors).map(err => (
+            <li key={err}>{err}</li>
+          ))}
+        </ul>
+      )}
       <p>
         <label htmlFor="title">Title</label>
         <input

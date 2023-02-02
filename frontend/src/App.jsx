@@ -8,7 +8,6 @@ import EventDetailPage, {
 import EditEventPage from './pages/EditEvent';
 import NewEventPage, { action as newEventAction } from './pages/NewEvent';
 import RootLayout from './pages/Root';
-import EventsNavigation from './components/EventsNavigation';
 import EventsRootLayout from './pages/EventsRoot';
 // Challenge / Exercise
 import ErrorPage from './pages/Error';
