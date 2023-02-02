@@ -12,9 +12,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
   try {
     const events = await getAll();
-    setTimeout(() => {
-      res.json({ events: events });
-    }, 2000);
+    res.json({ events: events });
   } catch (error) {
     next(error);
   }
@@ -23,10 +21,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const event = await get(req.params.id);
-
-    setTimeout(() => {
-      res.json({ event: event });
-    }, 1500);
+    res.json({ event: event });
   } catch (error) {
     next(error);
   }
